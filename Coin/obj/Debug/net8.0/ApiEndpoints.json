@@ -1,0 +1,172 @@
+[
+  {
+    "ContainingType": "Coin.Controllers.CoinController",
+    "Method": "GetList",
+    "RelativePath": "api/Coin/GetList",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "CMCode",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "CMNName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "CoinMapNameId",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "FormAction",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Coin.Controllers.CoinController",
+    "Method": "GetRates",
+    "RelativePath": "api/Coin/GetRates",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Coin.Controllers.CoinController",
+    "Method": "PostData",
+    "RelativePath": "api/Coin/PostData",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "CMCode",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "CMNName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "CoinMapNameId",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "FormAction",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Coin.Controllers.HomeController",
+    "Method": "Error",
+    "RelativePath": "Error",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Coin.Controllers.HomeController",
+    "Method": "Form",
+    "RelativePath": "Form/{formAction}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "formAction",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "cmCode",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "coinMapNameId",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Coin.Controllers.HomeController",
+    "Method": "Form",
+    "RelativePath": "Form/{formAction}/{cmCode}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "formAction",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "cmCode",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "coinMapNameId",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Coin.Controllers.HomeController",
+    "Method": "Form",
+    "RelativePath": "Form/{formAction}/{cmCode}/{coinMapNameId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "formAction",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "cmCode",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "coinMapNameId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Coin.Controllers.HomeController",
+    "Method": "List",
+    "RelativePath": "List",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]

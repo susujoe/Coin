@@ -1,0 +1,116 @@
+﻿@model Coin.ViewModels.Coin.CoinViewModel;
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@section Scripts {
+<script>
+    var formAction = '@ViewContext.RouteData.Values["formAction"]';
+    var coinMapNameId = '@ViewContext.RouteData.Values["coinMapNameId"]';
+    $(document).ready(function () {
+    //     const fv = FormValidation.formValidation(
+    //         document.getElementById('form'),
+    //         {
+    //             fields:
+    //             {
+				//     CMCode: {
+    //                     validators: {
+    //                         notEmpty: { message: "請輸入幣別", },
+    //                         callback: {
+    //                             callback: function (value, validator, $field) {
+    //                                 if (parseFloat($('#CMCode').val().length) != 3) {
+    //                                     return {
+    //                                         valid: false,
+    //                                         message: "幣別須為3碼!!",
+    //                                     };
+    //                                 }
+    //                                 return {
+    //                                     valid: true
+    //                                 };
+    //                             }
+    //                         }
+    //                     }
+    //                 },
+    //                 CMNName: {
+    //                     validators: {
+    //                         notEmpty: { message: "請輸入名稱", },
+    //                     }
+    //                 },
+				// },
+    //             plugins: {
+    //                 submitButton: new FormValidation.plugins.SubmitButton(), /* 點擊SubmitButton開始檢查 */
+    //                 trigger: new FormValidation.plugins.Trigger(), /* 檢查 input change */
+    //                 bootstrap5: new FormValidation.plugins.Bootstrap5({ rowSelector: ".fv-row", eleInvalidClass: "", eleValidClass: "" }), /* bootstrap5, .fv-row */                        
+    //             },
+    //         }
+    //     );
+        $('#BTNSubmit').on('click', function (event) {
+            // fv.validate().then(function (status) {
+            //     if ('Valid' == status) {
+                    AjaxCall(formAction);
+            //     }                    
+            // });
+        });
+
+        $('#BTNCancel').on('click', function (event) {
+            history.go(-1);
+        });
+
+        $('#BTNDelete').on('click', function (event) {
+            AjaxCall("Delete");
+        });
+
+        var AjaxCall = function(action){
+            $.ajax({
+                url: "/api/Coin/PostData",
+                type: "POST",
+                dataType: "json",
+                data: $('#form').serialize() + "&FormAction=" + action + "&CoinMapNameId= "+ coinMapNameId,
+                success: function (data) {
+                    if (data.IsSuccess) {
+                        alert(data.Message);
+                        window.location.href = "/";
+                    }
+                    else {
+                        alert(data.Message);
+                    }
+                },
+            });            
+        }
+    });
+</script>
+}
+@if (Model != null)
+{
+    string btnSubmitName = "";
+    if (string.Equals("Add", ViewBag.FormAction))
+    {
+		btnSubmitName = "新增";
+    }
+    else if (string.Equals("Edit", ViewBag.FormAction))
+    {
+        btnSubmitName = "編修";
+    }
+    <a class="btn btn-primary" href="javascript:history.back()">回上一頁</a>
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { name = "form", id = "form", autocomplete = "off" }))
+    {
+        <div class="mb-10 fv-row">
+            <label class="required form-label">幣別</label>
+            <div class="row">
+                @Html.TextBoxFor(model => model.CMCode, new { @class = "form-control", id = "CMCode", maxlength = "3" })
+            </div>
+            <label class="required form-label">名稱</label>
+            <div class="row">
+                @Html.TextBoxFor(model => model.CMNName, new { @class = "form-control", id = "CMNName", maxlength = "20" })
+            </div>
+        </div>
+        <div class="text-center">
+            <button type="button" id="BTNCancel" class="btn btn-light me-10">取消</button>
+            <button type="button" id="BTNSubmit" class="btn btn-primary me-10">@btnSubmitName</button>
+            @if (ViewBag.BtnDeleteEnabled ?? false)
+            {
+                <button type="button" id="BTNDelete" class="btn btn-danger me-10">刪除</button>
+            }
+        </div>
+    }
+}

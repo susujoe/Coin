@@ -1,0 +1,107 @@
+﻿@model Coin.ViewModels.Coin.CoinViewModel;
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<a class="btn btn-primary" href="/api/Coin/GetRates">新增/更新Coin Api</a>
+@using (Html.BeginForm(null, null, FormMethod.Get, new { name = "form", id = "form", autocomplete = "off" }))
+{
+    <div class="container">
+        <div class="row">
+            <label class="">幣別</label>
+            <div class="">
+                @Html.TextBoxFor(model => model.CMCode, new { @class = "form-control", id = "CMCode" })
+            </div>
+            <label class="">名稱</label>
+            <div class="">
+                @Html.TextBoxFor(model => model.CMNName, new { @class = "form-control", id = "CMNName" })
+            </div>
+        </div>
+        <div class="text-center">
+            <button type="button" id="BTNSubmit" class="btn btn-primary mx-2">查詢</button>
+            <button type="reset" class="btn btn-secondary mx-2">重設</button>
+        </div>
+    </div>
+}
+
+<a class="btn btn-primary" href="/Form/Add">新增幣別</a>
+<table id="myTable" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>編號</th>
+            <th>幣別</th>
+            <th>名稱</th>
+            <th>更新日期</th>
+            <th>幣別名稱</th>
+        </tr>
+    </thead>
+</table>
+<style>
+    .dt-search, .dt-length {
+        display: none;
+    }
+</style>
+@section Scripts {
+<script>
+    $(document).ready(function () {
+        var myDataTable = $('#myTable').DataTable({
+            ajax: {
+                url: "/api/Coin/GetList",
+                data: function (d) {
+                    d.CMCode = $('#CMCode').val();
+                    d.CMNName = $('#CMNName').val();
+                },
+                dataSrc: "Data",
+            },
+            columns: [
+                { data: "RowIndex" },
+                { data: "CMCode" },
+                { data: "CMNName" },
+                {
+                    data: "CMUpdateTime",
+                },
+                {
+                    data: null,
+                    render: function (data, type, row) {
+                            if(data.CoinMapNameId != ''){
+                                 return`<a class="btn btn-primary" href="/Form/Edit/${data.CMCode}/${data.CoinMapNameId}">編修</a>
+                                        <button class="btn btn-primary" onclick="AjaxCall('Delete', '${data.CMCode}', '${data.CoinMapNameId}')" >刪除</button>`;
+                            }else{
+                                return `<a class="btn btn-primary" href="/Form/Add/${data.CMCode}">新增</a>`;
+                            }
+						}
+                }
+            ],
+            searching: false,
+            paging: true,
+            searching: true,
+            ordering: true,
+            language: {
+                url: "https://cdn.datatables.net/plug-ins/1.13.6/i18n/zh-HANT.json"
+            }
+        });
+        $('#BTNSubmit').on('click', function (event) {
+            myDataTable.ajax.reload();
+        });
+        
+    });
+    function AjaxCall(action, cmCode, coinMapNameId){
+        console.log('1');
+        $.ajax({
+            url: "/api/Coin/PostData",
+            type: "POST",
+            dataType: "json",
+            data: "&FormAction=" + action + "&CMCode=" + cmCode + "&CoinMapNameId= "+ coinMapNameId,
+            success: function (data) {
+                if (data.IsSuccess) {
+                    alert(data.Message);
+                    window.location.href = "/";
+                }
+                else {
+                    alert(data.Message);
+                }
+            },
+        });
+    }
+</script>
+}
